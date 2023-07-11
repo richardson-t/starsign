@@ -4,7 +4,11 @@ from timezonefinder import TimezoneFinder
 from astropy import units as u
 from astropy.coordinates import SkyCoord,AltAz,EarthLocation
 from astropy.time import Time
+import astroquery
+from astroquery.simbad import Simbad
+import astropy.coordinates as coord
 tf = TimezoneFinder()
+
 
 #for date in YYYYMMDD, time in HH:MM:SS, location in Google Maps format
 def return_zenith(date,location,time='12:00:00',frame='icrs'):
@@ -21,7 +25,10 @@ def return_zenith(date,location,time='12:00:00',frame='icrs'):
     return coord.transform_to(frame)
 
 bday = input("Enter your birthday in YYYYMMDD format:")
+
 bday_time = input("Enter the time you were born in 24-hour format (if unknown, put 12:00)")
 bday_loc = input("Enter the location you were born:")
 
-print(return_zenith(bday, bday_loc, bday_time))
+result_table = Simbad.query_region(return_zenith(bday, bday_loc, bday_time), radius='0d20m0s')
+sign = result_table[0]
+print("Your 'star sign' is " + str(sign['MAIN_ID']) + " at RA " + str(sign['RA']) + " and DEC " + str(sign['DEC']))
