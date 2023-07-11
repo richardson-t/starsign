@@ -19,3 +19,9 @@ def return_zenith(date,location,time='12:00:00',frame='icrs'):
     
     coord = SkyCoord(0,90,frame=AltAz(obstime=new_dt.isoformat(),location=loc),unit=u.deg)
     return coord.transform_to(frame)
+
+bday = input("Enter your birthday in YYYYMMDD format:")
+bday_time = input("Enter the time you were born in 24-hour format (if unknown, put 12:00)")
+bday_loc = input("Enter the location you were born:")
+
+print(return_zenith(bday, bday_loc, bday_time))
