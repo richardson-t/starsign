@@ -1,0 +1,6 @@
+pytz
+numpy
+astropy
+datetime
+astroquery
+timezonefinder
