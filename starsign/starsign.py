@@ -40,7 +40,7 @@ class StarSign(object):
         self.__location = location
         self.__time = self.__make_time(date,time)
         self.__coord = self.__zenith(location,date,time,frame)
-        self.__star_info = self.__nearest_star()
+        self.__star = self.__nearest_star()
         
     @property
     def location(self):
