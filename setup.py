@@ -21,5 +21,4 @@ setup(
     url="https://github.com/richardson-t/starsign",
     packages=find_packages(),
     keywords="Zodiac Star Fun Horoscope",
-    install_requires=get_reqs[])
-
+    install_requires=get_reqs())
