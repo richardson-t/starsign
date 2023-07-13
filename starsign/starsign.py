@@ -34,8 +34,8 @@ class StarSign(object):
                 24-hour time as 'HH:MM:SS', or other format that works 
                 with astropy.time.Time objects. Defaults to noon.
             frame (str): Reference frame for the StarSign. Can be any of
-                astropy's built-in frames ('icrs','fk5','fk4','fk4noeterms','galactic').
-                Defaults to 'icrs'.
+                astropy's built-in frames ('icrs','fk5','fk4','fk4noeterms',
+                'galactic'). Defaults to 'icrs'.
         """
         self.__location = location
         self.__time = self.__make_time(date,time)
@@ -71,7 +71,7 @@ class StarSign(object):
         eloc = EarthLocation.of_address(location)
         dt = self.__time.to_datetime()
         dt += self.__time_shift(dt,eloc)
-        self.__time = Time(dt.isoformat())
+        self.__time = Time(dt.isoformat()) #shift object's time to be UTC for standardization
         
         #make SkyCoord directly overhead (90, 0 in alt/az) in location at time
         coord = SkyCoord(0,90,frame=AltAz(obstime=dt.isoformat(),location=eloc),unit=u.deg)
@@ -106,12 +106,40 @@ class StarSign(object):
             return False
     
     def visualize(self,hips=None,width=1000,height=1000,
-                  fov=0.1*u.deg,cmap='Greys_r'):
+                  fov=0.1,cmap='Greys_r'):
+        """Plot the star and surrounding area.
+
+        Makes a plot of an image from HiPS centered on the coordinates 
+        of the star (in ICRS lat/long) with some user-defined size,
+        field of view, and colormap. See https://aladin.cds.unistra.fr/hips/
+        for more details.
+
+        Parameters:
+            hips (str): Survey to retrieve the image from. See
+                https://aladin.cds.unistra.fr/hips/list for a list
+                of acceptable inputs. Defaults to None.
+            width (int): Width of the resulting image in pixels. Defaults to 1000.
+            height (int): Height of the resulting image in pixels. Defaults to 1000.
+            fov (float): Field of view of the largest dimension of the 
+                image, in degrees. Defaults to 0.1.
+            cmap (str): Colormap of the resulting image. Any name of one of
+                Matplotlib's built-in colormaps will function here
+                (see https://matplotlib.org/stable/gallery/color/colormap_reference.html
+                for a comprehensive list.) Defaults to "Greys_r".
+        """
+        if (type(width) != int) or (type(height) != int):
+            raise TypeError('Number of pixels must be an int')
+        
+        fov = fov*u.deg
         ra = Angle(self.__star['RA'],unit=u.hourangle)
         dec = Angle(self.__star['DEC'],unit=u.deg)
+
+        #if you don't have a particular HiPS survey in mind,
+        #just pull from whatever SIMBAD gives
         if hips == None:
             hips = self.__star['MAIN_ID'].split(' ')[0]
 
+        #pull FITS file from HiPS. if it times out, raise a RuntimeError
         try:
             #sometimes object identifiers don't have associated catalogs;
             #if not, default to Gaia
@@ -126,6 +154,7 @@ class StarSign(object):
                 
         im = plt.imshow(result[0].data,cmap=cmap)
 
+        #handle display of coordinates for different widths and heights
         min_px,max_px = min(width,height),max(width,height)
         ticks = np.linspace(.25,.75,3)*max_px
         short_ticks = np.linspace(min(ticks),max(ticks),len(ticks))-(max_px-min_px)/2
