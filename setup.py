@@ -22,4 +22,3 @@ setup(
     packages=find_packages(),
     keywords="Zodiac Star Fun Horoscope",
     install_requires=get_reqs())
-
