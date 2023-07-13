@@ -5,6 +5,7 @@ from timezonefinder import TimezoneFinder
 from pytz import timezone
 from astroquery.simbad import Simbad
 from astroquery.hips2fits import hips2fits
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 
@@ -96,17 +97,57 @@ class StarSign(object):
         """Returns the StarSign's star attribute."""
         return self.__star
 
+    def __width_long(self,width,height):
+        if width >= height:
+            return True
+        else:
+            return False
+    
     def visualize(self,hips=None,width=1000,height=1000,
-                  fov=0.1*u.deg,coordsys='icrs',cmap='Greys_r'):
+                  fov=0.1*u.deg,cmap='Greys_r'):
         ra = Angle(self.__star['RA'],unit=u.hourangle)
         dec = Angle(self.__star['DEC'],unit=u.deg)
         if hips == None:
             hips = self.__star['MAIN_ID'].split(' ')[0]
+
         try:
-            result = hips2fits.query(hips,width,height,'TAN',
-                                     ra,dec,fov,coordsys=coordsys)
-        except(AttributeError):
-            result = hips2fits.query('Gaia DR3',width,height,'TAN',
-                                     ra,dec,fov,coordsys=coordsys)
+            #sometimes object identifiers don't have associated catalogs;
+            #if not, default to Gaia
+            try:
+                result = hips2fits.query(hips,width,height,'TAN',
+                                         ra,dec,fov)
+            except(AttributeError):
+                result = hips2fits.query('Gaia DR3',width,height,'TAN',
+                                         ra,dec,fov)
+        except:
+            raise RuntimeError('Read from HiPS timed out; try fewer pixels')
+                
         im = plt.imshow(result[0].data,cmap=cmap)
+
+        min_px,max_px = min(width,height),max(width,height)
+        ticks = np.linspace(.25,.75,3)*max_px
+        short_ticks = np.linspace(min(ticks),max(ticks),len(ticks))-(max_px-min_px)/2
+        short_ticks = short_ticks[np.logical_and(short_ticks > 0,short_ticks < min_px)]
+        tick_scale = np.format_float_positional(fov.value/4,precision=3)
+        pm = f'{tick_scale}'
+        
+        if self.__width_long(width,height):
+            xlabels = [f'-{pm}',f"{np.round(ra.to(u.deg).value,3)}",f'+{pm}']
+            ylabels = [None,f'{np.round(dec.value,3)}',None]
+            if len(short_ticks) < len(ticks):
+                ylabels = [ylabels[1]]
+            plt.xticks(ticks=ticks,labels=xlabels)
+            plt.yticks(ticks=short_ticks,labels=ylabels)
+        else:
+            xlabels = [None,f'{np.round(ra.to(u.deg).value,3)}',None]
+            ylabels = [f'-{pm}',f'{np.round(dec.value,3)}',f'+{pm}']
+            if len(short_ticks) < len(ticks):
+                xlabels = [xlabels[1]]
+            plt.xticks(ticks=short_ticks,labels=xlabels)
+            plt.yticks(ticks=ticks,labels=ylabels)
+
+        plt.gca().tick_params(width=2)
+        plt.title(f"{self.__star['MAIN_ID']}")
+        plt.xlabel('Longitude (degrees)')
+        plt.ylabel('Latitude (degrees)')
         plt.show()
