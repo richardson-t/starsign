@@ -7,7 +7,6 @@ from astroquery.simbad import Simbad
 from astroquery.hips2fits import hips2fits
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import Colormap
 
 class StarSign(object):
     """Information about the star above a given Earth location at a given time.
@@ -41,7 +40,7 @@ class StarSign(object):
         self.__location = location
         self.__time = self.__make_time(date,time)
         self.__coord = self.__zenith(location,date,time,frame)
-        self.__star = self.__nearest_star()
+        self.__star_info = self.__nearest_star()
         
     @property
     def location(self):
@@ -89,7 +88,10 @@ class StarSign(object):
         ra = self.__coord.ra.value
         dec = self.__coord.dec.value
         sign = '+' if dec >= 0 else ''
-        stars = Simbad.query_criteria(f'region(circle, ICRS, {ra} {sign}{dec}, 0.5d)',otype='Star')
+        
+        custom_simbad = Simbad()
+        custom_simbad.add_votable_fields('otype')
+        stars = custom_simbad.query_criteria(f'region(circle, ICRS, {ra} {sign}{dec}, 0.5d)', otype='Star')
         return stars[0]
 
     @property
