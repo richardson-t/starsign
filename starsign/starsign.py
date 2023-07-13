@@ -5,14 +5,14 @@ from timezonefinder import TimezoneFinder
 from pytz import timezone
 from astroquery.simbad import Simbad
 custom_simbad = Simbad()
-custom_simbad.add_votable_fields('otype','otype(opt)', 'otypes')
+custom_simbad.add_votable_fields('otype')
 
 class StarSign(object):    
     def __init__(self,location,date,time='12:00:00',frame='icrs'):
         self.__location = location
         self.__time = self.__make_time(date,time)
         self.__coord = self.__zenith(location,date,time,frame)
-        self.__star = self.__nearest_star()
+        self.__star_info = self.__nearest_star()
         
     @property
     def location(self):
