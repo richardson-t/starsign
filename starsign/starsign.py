@@ -29,7 +29,7 @@ class StarSign(object):
             location (str): Location for the StarSign. Any format 
                 that works for Google Maps will function here
                 (ex. 'Chicago', 'Chicago, IL', (41.881832, -87.623177)).
-            date (str): Day for the StarSign. Should be formatted as 'YYYYMMDD'.
+            date (str): Day for the StarSign. Should be formatted as 'YYYY-MM-DD'.
             time (str): Time for the StarSign. Should be formatted using 
                 24-hour time as 'HH:MM:SS', or other format that works 
                 with astropy.time.Time objects. Defaults to noon.
@@ -46,14 +46,9 @@ class StarSign(object):
     def location(self):
         """Returns the StarSign's location attribute."""
         return self.__location
-    
-    def __interp_date(self,date):
-        mod_date = f'{date[:4]}-{date[4:6]}-{date[6:]}'
-        return mod_date
 
     def __make_time(self,date,time):
-        mod_date = self.__interp_date(date)
-        return Time(f'{mod_date}T{time}')
+        return Time(f'{date}T{time}')
 
     @property
     def time(self):
