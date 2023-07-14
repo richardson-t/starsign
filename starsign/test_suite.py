@@ -1,9 +1,10 @@
 import pytest
 from astropy.time import Time
 from astropy.coordinates import Angle
+from astropy import units as u
 from timezonefinder import TimezoneFinder
 from pytz import timezone
-from starsign import StarSign
+from starsign.starsign import StarSign
 
 locations = ['Chicago, IL', 'Albany, USA']
 dates = ['2023-07-13','2023-01-13','2020-02-29']
@@ -32,7 +33,7 @@ def test_time_creation():
         zone = timezone(tz)
         offset = zone.utcoffset(dt)
         
-        s = StarSign(locations[0],date[0],times[0])
+        s = StarSign(locations[0],dates[0],times[0])
         sign_delta = s.time-t
 
         assert offset == sign_delta
@@ -56,8 +57,8 @@ def test_star_finding():
     ra = Angle(s1.star['RA'],unit=u.hourangle).to(u.deg)
     dec = Angle(s1.star['DEC'],unit=u.deg)
 
-    assert ra == pytest.approx(s1.coord.ra,0.25*u.deg)
-    assert dec == pytest.approx(s1.coord.dec,0.25*u.deg)
+    assert ra.value == pytest.approx(s1.coord.ra.value,abs=0.25)
+    assert dec.value == pytest.approx(s1.coord.dec.value,abs=0.25)
     
 #end-to-end tests
 
@@ -69,24 +70,24 @@ def test_vis():
     s.visualize(hips='Gaia DR3')
     s.visualize(width=3000)
     s.visualize(height=3000)
-    s.visualize(fov=10)
+    s.visualize(fov=1)
     s.visualize(cmap='viridis')
 
     #does it handle edge cases?
     #image too big to get from HiPS
     try:
-        s.vizualize(width=10000,height=10000)
+        s.visualize(width=10000,height=10000)
     except(RuntimeError):
-        continue
+        pass
 
     #one of the dimensions is zero
     try:
         s.visualize(width=0)
     except(ValueError):
-        continue
+        pass
     try:
         s.visualize(height=0)
     except(ValueError):
-        continue
+        pass
 
     
