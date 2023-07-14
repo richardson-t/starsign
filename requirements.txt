@@ -3,4 +3,5 @@ numpy
 astropy
 datetime
 astroquery
+matplotlib
 timezonefinder
