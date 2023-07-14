@@ -11,6 +11,20 @@ import matplotlib.pyplot as plt
 class StarSign(object):
     """Information about the star above a given Earth location at a given time.
 
+    Parameters:
+        location (str): Location for the StarSign. Any format
+            that works for Google Maps will function here
+            (ex. 'Chicago', 'Chicago, IL', (41.881832, -87.623177)).
+            Be advised that, as in Google Maps, the more specific you
+            are, the more accurate the output.
+        date (str): Day for the StarSign. Should be formatted as 'YYYY-MM-DD'.
+        time (str): Time for the StarSign. Should be formatted using
+            24-hour time as 'HH:MM:SS', or other format that works                                          
+            with astropy.time.Time objects. Defaults to noon.
+        frame (str): Reference frame for the StarSign. Can be any of
+            astropy's built-in frames ('icrs','fk5','fk4','fk4noeterms',
+            'galactic'). Defaults to 'icrs'.
+
     Attributes:
         location (str): provided Earth location
         time (astropy.time.Time): provided time, converted to UTC
@@ -20,23 +34,7 @@ class StarSign(object):
             star to coord. Retrieved from SIMBAD.
     """
     def __init__(self,location,date,time='12:00:00',frame='icrs'):
-        """Instantiate a StarSign.
-
-        Create a StarSign instance given some location, date, time,
-        and coordinate frame.
-        
-        Parameters:
-            location (str): Location for the StarSign. Any format 
-                that works for Google Maps will function here
-                (ex. 'Chicago', 'Chicago, IL', (41.881832, -87.623177)).
-            date (str): Day for the StarSign. Should be formatted as 'YYYY-MM-DD'.
-            time (str): Time for the StarSign. Should be formatted using 
-                24-hour time as 'HH:MM:SS', or other format that works 
-                with astropy.time.Time objects. Defaults to noon.
-            frame (str): Reference frame for the StarSign. Can be any of
-                astropy's built-in frames ('icrs','fk5','fk4','fk4noeterms',
-                'galactic'). Defaults to 'icrs'.
-        """
+        """Instantiate a StarSign."""
         self.__location = location
         self.__time = self.__make_time(date,time)
         self.__coord = self.__zenith(location,date,time,frame)
