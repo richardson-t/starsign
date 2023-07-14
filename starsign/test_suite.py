@@ -33,10 +33,10 @@ def test_time_creation():
         zone = timezone(tz)
         offset = zone.utcoffset(dt)
         
-        s = StarSign(locations[0],dates[0],times[0])
-        sign_delta = s.time-t
+        s = StarSign(locations[0],dates[i],times[i])
+        sign_delta = -((s.time-t)*86400).value
 
-        assert offset == sign_delta
+        assert offset.total_seconds() == pytest.approx(sign_delta,abs=1e-3)
     
 def test_frame():
     #are the coordinates in the right frames? are they the right numbers?
