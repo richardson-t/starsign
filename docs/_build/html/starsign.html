@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StarSign &#8212; StarSign  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to StarSign’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to StarSign’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">StarSign  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">StarSign</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="starsign">
+<span id="id1"></span><h1>StarSign<a class="headerlink" href="#starsign" title="Permalink to this heading">¶</a></h1>
+<p>StarSign class modules, functions, and properties.</p>
+<span class="target" id="module-starsign"></span><dl class="py class">
+<dt class="sig sig-object py" id="starsign.StarSign">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">starsign.</span></span><span class="sig-name descname"><span class="pre">StarSign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12:00:00'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'icrs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#starsign.StarSign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information about the star above a given Earth location at a given time.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="starsign.StarSign.location">
+<span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#starsign.StarSign.location" title="Permalink to this definition">¶</a></dt>
+<dd><p>provided Earth location</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="starsign.StarSign.time">
+<span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#starsign.StarSign.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>provided time, converted to UTC</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>astropy.time.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="starsign.StarSign.coord">
+<span class="sig-name descname"><span class="pre">coord</span></span><a class="headerlink" href="#starsign.StarSign.coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>point on the sky over
+the provided Earth location at the provided time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>astropy.coordinates.SkyCoord</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="starsign.StarSign.star">
+<span class="sig-name descname"><span class="pre">star</span></span><a class="headerlink" href="#starsign.StarSign.star" title="Permalink to this definition">¶</a></dt>
+<dd><p>information about the closest
+star to coord. Retrieved from SIMBAD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>astropy.table.Table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coord</span></span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the StarSign’s coord attribute.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the StarSign’s location attribute.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">star</span></span><a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the StarSign’s star attribute.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the StarSign’s time attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="starsign.StarSign.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#starsign.StarSign.visualize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the star and surrounding area.</p>
+<p>Makes a plot of an image from HiPS centered on the coordinates
+of the star (in ICRS lat/long) with some user-defined size,
+field of view, and colormap. See <a class="reference external" href="https://aladin.cds.unistra.fr/hips/">https://aladin.cds.unistra.fr/hips/</a>
+for more details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hips</strong> (<em>str</em>) – Survey to retrieve the image from. See
+<a class="reference external" href="https://aladin.cds.unistra.fr/hips/list">https://aladin.cds.unistra.fr/hips/list</a> for a list
+of acceptable inputs. Defaults to None.</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – Width of the resulting image in pixels. Defaults to 1000.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height of the resulting image in pixels. Defaults to 1000.</p></li>
+<li><p><strong>fov</strong> (<em>float</em>) – Field of view of the largest dimension of the
+image, in degrees. Defaults to 0.1.</p></li>
+<li><p><strong>cmap</strong> (<em>str</em>) – Colormap of the resulting image. Any name of one of
+Matplotlib’s built-in colormaps will function here
+(see <a class="reference external" href="https://matplotlib.org/stable/gallery/color/colormap_reference.html">https://matplotlib.org/stable/gallery/color/colormap_reference.html</a>
+for a comprehensive list.) Defaults to “Greys_r”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">StarSign</a><ul>
+<li><a class="reference internal" href="#starsign.StarSign"><code class="docutils literal notranslate"><span class="pre">StarSign</span></code></a><ul>
+<li><a class="reference internal" href="#starsign.StarSign.location"><code class="docutils literal notranslate"><span class="pre">StarSign.location</span></code></a></li>
+<li><a class="reference internal" href="#starsign.StarSign.time"><code class="docutils literal notranslate"><span class="pre">StarSign.time</span></code></a></li>
+<li><a class="reference internal" href="#starsign.StarSign.coord"><code class="docutils literal notranslate"><span class="pre">StarSign.coord</span></code></a></li>
+<li><a class="reference internal" href="#starsign.StarSign.star"><code class="docutils literal notranslate"><span class="pre">StarSign.star</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">StarSign.coord</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">StarSign.location</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">StarSign.star</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">StarSign.time</span></code></a></li>
+<li><a class="reference internal" href="#starsign.StarSign.visualize"><code class="docutils literal notranslate"><span class="pre">StarSign.visualize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Welcome to StarSign’s documentation!</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/starsign.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to StarSign’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">StarSign  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">StarSign</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, Theo Richardson &amp; Leo Skaer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

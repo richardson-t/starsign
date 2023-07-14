@@ -29,7 +29,7 @@ class StarSign(object):
             location (str): Location for the StarSign. Any format 
                 that works for Google Maps will function here
                 (ex. 'Chicago', 'Chicago, IL', (41.881832, -87.623177)).
-            date (str): Day for the StarSign. Should be formatted as 'YYYYMMDD'.
+            date (str): Day for the StarSign. Should be formatted as 'YYYY-MM-DD'.
             time (str): Time for the StarSign. Should be formatted using 
                 24-hour time as 'HH:MM:SS', or other format that works 
                 with astropy.time.Time objects. Defaults to noon.
@@ -46,14 +46,9 @@ class StarSign(object):
     def location(self):
         """Returns the StarSign's location attribute."""
         return self.__location
-    
-    def __interp_date(self,date):
-        mod_date = f'{date[:4]}-{date[4:6]}-{date[6:]}'
-        return mod_date
 
     def __make_time(self,date,time):
-        mod_date = self.__interp_date(date)
-        return Time(f'{mod_date}T{time}')
+        return Time(f'{date}T{time}')
 
     @property
     def time(self):
@@ -68,6 +63,10 @@ class StarSign(object):
         return -zone.utcoffset(dt) #negative converts TO UTC, which we want
 
     def __zenith(self,location,date,time,frame):
+        valid_frames = ['icrs','fk5','fk4','fk4noeterms','galactic']
+        if frame not in valid_frames:
+            raise ValueError('Reference frame not recognized. Check documentation for valid frames.')
+
         eloc = EarthLocation.of_address(location)
         dt = self.__time.to_datetime()
         dt += self.__time_shift(dt,eloc)
@@ -85,8 +84,8 @@ class StarSign(object):
 
     def __nearest_star(self):
         icrs_coord = self.__coord.transform_to('icrs')
-        ra = self.__coord.ra.value
-        dec = self.__coord.dec.value
+        ra = icrs_coord.ra.value
+        dec = icrs_coord.dec.value
         sign = '+' if dec >= 0 else ''
         
         custom_simbad = Simbad()
@@ -129,6 +128,8 @@ class StarSign(object):
         """
         if (type(width) != int) or (type(height) != int):
             raise TypeError('Number of pixels must be an int')
+        if not np.isfinite(np.log10(width)) or not np.isfinite(np.log10(height)):
+            raise ValueError('Number of pixels must be integer > 0')
         
         fov = fov*u.deg
         ra = Angle(self.__star['RA'],unit=u.hourangle)
@@ -179,6 +180,6 @@ class StarSign(object):
 
         plt.gca().tick_params(width=2)
         plt.title(f"{self.__star['MAIN_ID']}")
-        plt.xlabel('Longitude (degrees)')
-        plt.ylabel('Latitude (degrees)')
+        plt.xlabel('ICRS RA (degrees)')
+        plt.ylabel('ICRS Dec (degrees)')
         plt.show()

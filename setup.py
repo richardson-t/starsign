@@ -16,7 +16,7 @@ def get_property(prop, project):
 
 setup(
     name='starsign', 
-    version=("__version__", "starsign"),
+    version=get_property("__version__", "starsign"),
     description="StarSign: more fun than normal horoscopes!",
     url="https://github.com/richardson-t/starsign",
     packages=find_packages(),
