@@ -21,7 +21,7 @@ The object and surrounding area can be visualized by running:
 ```
 s.visualize()
 ```
-For more details on functionality, run help(StarSign) from within a Python session. This software package can be installed by running:
+For more details on functionality, visit [our ReadTheDocs page](https://starsign.readthedocs.io/en/latest/index.html) or run help(StarSign) from within a Python session. This software package can be installed by running:
 ```
 pip install starsign
 ```
