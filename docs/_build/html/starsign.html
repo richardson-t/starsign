@@ -47,6 +47,24 @@
 <dt class="sig sig-object py" id="starsign.StarSign">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">starsign.</span></span><span class="sig-name descname"><span class="pre">StarSign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'12:00:00'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'icrs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#starsign.StarSign" title="Permalink to this definition">¶</a></dt>
 <dd><p>Information about the star above a given Earth location at a given time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<em>str</em>) – Location for the StarSign. Any format
+that works for Google Maps will function here
+(ex. ‘Chicago’, ‘Chicago, IL’, (41.881832, -87.623177)).
+Be advised that, as in Google Maps, the more specific you
+are, the more accurate the output.</p></li>
+<li><p><strong>date</strong> (<em>str</em>) – Day for the StarSign. Should be formatted as ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>time</strong> (<em>str</em>) – Time for the StarSign. Should be formatted using
+24-hour time as ‘HH:MM:SS’, or other format that works
+with astropy.time.Time objects. Defaults to noon.</p></li>
+<li><p><strong>frame</strong> (<em>str</em>) – Reference frame for the StarSign. Can be any of
+astropy’s built-in frames (‘icrs’,’fk5’,’fk4’,’fk4noeterms’,
+‘galactic’). Defaults to ‘icrs’.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="starsign.StarSign.location">
 <span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#starsign.StarSign.location" title="Permalink to this definition">¶</a></dt>
