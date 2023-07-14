@@ -151,7 +151,7 @@ class StarSign(object):
         except:
             raise RuntimeError('Read from HiPS timed out; try fewer pixels')
                 
-        im = plt.imshow(result[0].data,cmap=cmap)
+        im = plt.imshow(result[0].data,cmap=cmap,origin='lower')
 
         #handle display of coordinates for different widths and heights
         min_px,max_px = min(width,height),max(width,height)
