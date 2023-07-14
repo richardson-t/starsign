@@ -80,8 +80,8 @@ class StarSign(object):
 
     def __nearest_star(self):
         icrs_coord = self.__coord.transform_to('icrs')
-        ra = self.__coord.ra.value
-        dec = self.__coord.dec.value
+        ra = icrs_coord.ra.value
+        dec = icrs_coord.dec.value
         sign = '+' if dec >= 0 else ''
         
         custom_simbad = Simbad()
@@ -124,6 +124,8 @@ class StarSign(object):
         """
         if (type(width) != int) or (type(height) != int):
             raise TypeError('Number of pixels must be an int')
+        if (width <= 0) or (height <= 0):
+            raise ValueError('Number of pixels must be > 0')
         
         fov = fov*u.deg
         ra = Angle(self.__star['RA'],unit=u.hourangle)
@@ -174,6 +176,6 @@ class StarSign(object):
 
         plt.gca().tick_params(width=2)
         plt.title(f"{self.__star['MAIN_ID']}")
-        plt.xlabel('Longitude (degrees)')
-        plt.ylabel('Latitude (degrees)')
+        plt.xlabel('ICRS RA (degrees)')
+        plt.ylabel('ICRS Dec (degrees)')
         plt.show()

@@ -25,7 +25,7 @@ def test_vis():
     #note: this requires by-eye validation
     s = StarSign(locations[0],dates[0])
     s.visualize()
-    s.visualize(hips='CDS/P/2MASS/H')
+    s.visualize(hips='Gaia DR3')
     s.visualize(width=3000)
     s.visualize(height=3000)
     s.visualize(fov=10)
