@@ -63,6 +63,10 @@ class StarSign(object):
         return -zone.utcoffset(dt) #negative converts TO UTC, which we want
 
     def __zenith(self,location,date,time,frame):
+        valid_frames = ['icrs','fk5','fk4','fk4noeterms','galactic']
+        if frame not in valid_frames:
+            raise ValueError('Reference frame not recognized. Check documentation for valid frames.')
+
         eloc = EarthLocation.of_address(location)
         dt = self.__time.to_datetime()
         dt += self.__time_shift(dt,eloc)
@@ -124,8 +128,8 @@ class StarSign(object):
         """
         if (type(width) != int) or (type(height) != int):
             raise TypeError('Number of pixels must be an int')
-        if (width <= 0) or (height <= 0):
-            raise ValueError('Number of pixels must be > 0')
+        if not np.isfinite(np.log10(width)) or not np.isfinite(np.log10(height)):
+            raise ValueError('Number of pixels must be integer > 0')
         
         fov = fov*u.deg
         ra = Angle(self.__star['RA'],unit=u.hourangle)
