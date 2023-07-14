@@ -1,9 +1,9 @@
 import pytest
 from starsign import StarSign
 
-locations = ['Chicago, IL']
-dates = ['2023-07-13']
-times = ['20:00']
+locations = ['Chicago, IL', 'Albany, USA']
+dates = ['2023-07-13', '2020-02-29']
+times = ['20:00', '00:00']
 frames = ['icrs','fk5','fk4','fk4noeterms','galactic']
 
 #unit tests
