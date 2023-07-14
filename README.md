@@ -1,3 +1,4 @@
+[![A rectangular badge, half black half purple containing the text made at Code Astro](https://img.shields.io/badge/Made%20at-Code/Astro-blueviolet.svg)](https://semaphorep.github.io/codeastro/)
 # starsign
 
 Given an Earth location, date, and time, this package can find the star closest to directly overhead. If you want a horoscope backed by the full might of SIMBAD, then it's your lucky day!
